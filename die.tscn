@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cag5sqq5fhjin"]
+
+[ext_resource type="Script" path="res://die.gd" id="1_k2kcm"]
+[ext_resource type="Texture2D" uid="uid://loujou3p3wbt" path="res://Sprites/Dice/dice_1_normal.png" id="2_swymo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ikxlk"]
+
+[node name="Die" type="Node2D"]
+script = ExtResource("1_k2kcm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_swymo")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("RectangleShape2D_ikxlk")
+
+[connection signal="input_event" from="Sprite2D/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Sprite2D/Area2D" to="." method="_on_area_2d_mouse_exited"]

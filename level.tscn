@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxv5mu74wwy83"]
+
+[ext_resource type="Texture2D" uid="uid://bmhaxa3mc2nvo" path="res://Sprites/dice_background.png" id="1_2fvvi"]
+[ext_resource type="PackedScene" uid="uid://bxho6ml6rk0ij" path="res://dice.tscn" id="2_a751q"]
+[ext_resource type="PackedScene" uid="uid://caixqdfj4laq4" path="res://ui.tscn" id="3_dh5fm"]
+[ext_resource type="PackedScene" uid="uid://c7u8n7gxkbo88" path="res://player.tscn" id="4_hl6u8"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(576, 326)
+scale = Vector2(5, 4)
+texture = ExtResource("1_2fvvi")
+region_enabled = true
+region_rect = Rect2(0, 0, 238, 162)
+
+[node name="Dice" parent="." instance=ExtResource("2_a751q")]
+
+[node name="UI" parent="." instance=ExtResource("3_dh5fm")]
+
+[node name="Player" parent="." instance=ExtResource("4_hl6u8")]
+
+[connection signal="dice_finished_rolling" from="Dice" to="Player" method="_on_dice_dice_finished_rolling"]
+[connection signal="on_die_held" from="Dice" to="Player" method="on_die_held"]
+[connection signal="on_die_released" from="Dice" to="Player" method="on_die_released"]
+[connection signal="on_end_turn_button_pressed" from="UI" to="Dice" method="_on_end_turn_button_pressed"]
+[connection signal="on_end_turn_button_pressed" from="UI" to="Player" method="_on_end_turn_button_pressed"]
+[connection signal="on_roll_button_pressed" from="UI" to="Dice" method="on_roll_button_pressed"]
+[connection signal="on_roll_button_pressed" from="UI" to="Player" method="_on_roll_button_pressed"]
+[connection signal="_on_roll_score_changed" from="Player" to="UI" method="_on_roll_score_changed"]
+[connection signal="display_player_message" from="Player" to="UI" method="_on_display_player_message"]
+[connection signal="hot_dice" from="Player" to="Dice" method="_on_player_hot_dice"]
+[connection signal="on_total_score_changed" from="Player" to="UI" method="_on_player_on_total_score_changed"]
+[connection signal="toggle_roll_button" from="Player" to="UI" method="_on_player_toggle_roll_button"]

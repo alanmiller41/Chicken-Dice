@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxho6ml6rk0ij"]
+
+[ext_resource type="Script" path="res://dice.gd" id="1_sn3te"]
+
+[node name="Dice" type="Node2D"]
+script = ExtResource("1_sn3te")
+debug_roll_values = [1, 1, 2, 2, 3, 3]
+
+[node name="RollTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StaggerTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
