@@ -16,6 +16,8 @@ signal on_total_score_changed
 signal toggle_roll_button
 signal hot_dice
 
+signal start_player_turn
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -23,6 +25,14 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func start_turn():
+	is_players_turn = true
+	start_player_turn.emit(player_number)
+	
+func end_turn():
+	#TODO pass turn to next player
+	turn_value = 0
 
 func determine_roll_value(dice):
 	set_all_dice_scored(dice, false)
@@ -51,10 +61,6 @@ func determine_roll_value(dice):
 			handle_hot_dice(dice)
 	
 	return roll_value
-	
-
-func end_turn():
-	turn_value = 0
 
 func _on_dice_rolled(dice):
 	pass
