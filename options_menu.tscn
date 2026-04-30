@@ -26,7 +26,7 @@ offset_left = 454.0
 offset_top = 291.0
 offset_right = 656.0
 offset_bottom = 339.0
-text = "Play off Player's roll"
+text = "Play off Player's roll (not yet implemented)"
 
 [node name="ReturnButton" type="Button" parent="ButtonManager" unique_id=353308982]
 layout_mode = 0
