@@ -31,3 +31,7 @@ func _on_player_count_minus_pressed():
 	if Global.player_count > 1:
 		Global.player_count -= 1
 		player_count_label.text = "Players: %d" % Global.player_count
+
+
+func _on_options_pressed() -> void:
+	get_tree().change_scene_to_file("res://options_menu.tscn")

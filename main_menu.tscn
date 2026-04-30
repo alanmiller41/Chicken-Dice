@@ -21,10 +21,10 @@ text = "Start"
 
 [node name="Quit" type="Button" parent="ButtonManager" unique_id=893613152]
 layout_mode = 0
-offset_left = 506.0
-offset_top = 500.0
-offset_right = 675.0
-offset_bottom = 547.0
+offset_left = 508.0
+offset_top = 552.0
+offset_right = 677.0
+offset_bottom = 599.0
 text = "Quit"
 
 [node name="PlayerCountPlus" type="Button" parent="ButtonManager" unique_id=716581496]
@@ -56,7 +56,16 @@ offset_right = 44.0
 offset_bottom = 11.52
 text = "Players: 1"
 
+[node name="Options" type="Button" parent="ButtonManager" unique_id=1773246409]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 484.0
+offset_right = 670.0
+offset_bottom = 530.0
+text = "Options"
+
 [connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonManager/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="ButtonManager/PlayerCountPlus" to="." method="_on_player_count_plus_pressed"]
 [connection signal="pressed" from="ButtonManager/PlayerCountMinus" to="." method="_on_player_count_minus_pressed"]
+[connection signal="pressed" from="ButtonManager/Options" to="." method="_on_options_pressed"]

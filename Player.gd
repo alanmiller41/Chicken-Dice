@@ -216,7 +216,6 @@ func _on_dice_dice_finished_rolling(dice):
 
 func _on_roll_button_pressed():
 	# TODO unhold any dice that aren't a part of the score
-	# turn_value += determine_roll_value(held_dice)
 	turn_value += roll_value
 	toggle_roll_button.emit(false)
 	held_dice = []
