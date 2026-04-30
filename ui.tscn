@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://caixqdfj4laq4"]
+[gd_scene format=3 uid="uid://caixqdfj4laq4"]
 
-[ext_resource type="Script" path="res://ui.gd" id="1_666nc"]
+[ext_resource type="Script" uid="uid://4dqo2q4x4pj5" path="res://ui.gd" id="1_666nc"]
 
-[node name="UI" type="Control"]
+[node name="UI" type="Control" unique_id=1579128484]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,30 +11,30 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_666nc")
 
-[node name="RollButton" type="Button" parent="."]
+[node name="RollButton" type="Button" parent="." unique_id=1384333804]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Roll"
 
-[node name="EndTurnButton" type="Button" parent="."]
+[node name="EndTurnButton" type="Button" parent="." unique_id=472324950]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 text = "End Turn"
 
-[node name="TurnScore" type="Label" parent="."]
+[node name="TurnScore" type="Label" parent="." unique_id=1563630990]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Roll Score:"
 
-[node name="MessageBox" type="Label" parent="."]
+[node name="MessageBox" type="Label" parent="." unique_id=975863763]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="MessageTimer" type="Timer" parent="MessageBox"]
+[node name="MessageTimer" type="Timer" parent="MessageBox" unique_id=452174030]
 one_shot = true
 
 [connection signal="timeout" from="MessageBox/MessageTimer" to="." method="_on_message_timer_timeout"]

@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxv5mu74wwy83"]
+[gd_scene format=3 uid="uid://cxv5mu74wwy83"]
 
 [ext_resource type="Texture2D" uid="uid://bmhaxa3mc2nvo" path="res://Sprites/dice_background.png" id="1_2fvvi"]
-[ext_resource type="Script" path="res://level.gd" id="1_il1h7"]
+[ext_resource type="Script" uid="uid://xf6mbaduby88" path="res://level.gd" id="1_il1h7"]
 [ext_resource type="PackedScene" uid="uid://bxho6ml6rk0ij" path="res://dice.tscn" id="2_a751q"]
 [ext_resource type="PackedScene" uid="uid://caixqdfj4laq4" path="res://ui.tscn" id="3_dh5fm"]
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" unique_id=1600767554]
 script = ExtResource("1_il1h7")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1089886597]
 texture_repeat = 2
 position = Vector2(576, 326)
 scale = Vector2(5, 4)
@@ -16,9 +16,9 @@ texture = ExtResource("1_2fvvi")
 region_enabled = true
 region_rect = Rect2(0, 0, 238, 162)
 
-[node name="Dice" parent="." instance=ExtResource("2_a751q")]
+[node name="Dice" parent="." unique_id=1662143045 instance=ExtResource("2_a751q")]
 
-[node name="UI" parent="." instance=ExtResource("3_dh5fm")]
+[node name="UI" parent="." unique_id=1348734979 instance=ExtResource("3_dh5fm")]
 
 [connection signal="on_end_turn_button_pressed" from="UI" to="Dice" method="_on_end_turn_button_pressed"]
 [connection signal="on_roll_button_pressed" from="UI" to="Dice" method="on_roll_button_pressed"]

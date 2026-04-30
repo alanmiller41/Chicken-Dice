@@ -68,3 +68,6 @@ func _on_player_toggle_roll_button(toggle: bool):
 	
 func on_start_player_turn(player):
 	total_score_labels[player-1].add_theme_color_override("font_color", Color("fcff00"))
+	
+func on_end_player_turn(player):
+	total_score_labels[player-1].add_theme_color_override("font_color", Color("ffff"))

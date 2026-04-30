@@ -17,6 +17,7 @@ signal toggle_roll_button
 signal hot_dice
 
 signal start_player_turn
+signal end_player_turn
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,6 +33,8 @@ func start_turn():
 	
 func end_turn():
 	#TODO pass turn to next player
+	is_players_turn = false
+	end_player_turn.emit(player_number)
 	turn_value = 0
 
 func determine_roll_value(dice):
@@ -223,4 +226,3 @@ func _on_end_turn_button_pressed():
 	on_total_score_changed.emit(player_number, score)
 	toggle_roll_button.emit(true)
 	end_turn()
-
