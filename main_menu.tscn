@@ -1,17 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://duoh68pwphxjb"]
+[gd_scene format=3 uid="uid://duoh68pwphxjb"]
 
-[ext_resource type="Script" path="res://Main Menu.gd" id="1_uce4c"]
+[ext_resource type="Script" uid="uid://bjrpu4ofwog4m" path="res://Main Menu.gd" id="1_uce4c"]
 
-[node name="MainMenu" type="Node2D"]
+[node name="MainMenu" type="Node2D" unique_id=1942464263]
 script = ExtResource("1_uce4c")
 
-[node name="ButtonManager" type="Control" parent="."]
+[node name="ButtonManager" type="Control" parent="." unique_id=333967630]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Start" type="Button" parent="ButtonManager"]
+[node name="Start" type="Button" parent="ButtonManager" unique_id=1015334235]
 layout_mode = 0
 offset_left = 512.0
 offset_top = 366.0
@@ -19,7 +19,7 @@ offset_right = 669.0
 offset_bottom = 411.0
 text = "Start"
 
-[node name="Quit" type="Button" parent="ButtonManager"]
+[node name="Quit" type="Button" parent="ButtonManager" unique_id=893613152]
 layout_mode = 0
 offset_left = 506.0
 offset_top = 500.0
@@ -27,7 +27,7 @@ offset_right = 675.0
 offset_bottom = 547.0
 text = "Quit"
 
-[node name="PlayerCountPlus" type="Button" parent="ButtonManager"]
+[node name="PlayerCountPlus" type="Button" parent="ButtonManager" unique_id=716581496]
 layout_mode = 0
 offset_left = 639.0
 offset_top = 433.0
@@ -35,7 +35,7 @@ offset_right = 666.0
 offset_bottom = 464.0
 text = "+"
 
-[node name="PlayerCountMinus" type="Button" parent="ButtonManager"]
+[node name="PlayerCountMinus" type="Button" parent="ButtonManager" unique_id=177772389]
 layout_mode = 0
 offset_left = 513.0
 offset_top = 435.0
@@ -43,7 +43,7 @@ offset_right = 540.0
 offset_bottom = 466.0
 text = "-"
 
-[node name="PlayerCountLabel" type="Label" parent="ButtonManager"]
+[node name="PlayerCountLabel" type="Label" parent="ButtonManager" unique_id=2119155337]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 14.6

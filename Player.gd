@@ -16,6 +16,9 @@ signal on_total_score_changed
 signal toggle_roll_button
 signal hot_dice
 
+signal start_player_turn
+signal end_player_turn
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -23,6 +26,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func start_turn():
+	is_players_turn = true
+	_on_roll_score_changed.emit(0)
+	start_player_turn.emit(player_number)
+	
+func end_turn():
+	#TODO pass turn to next player
+	is_players_turn = false
+	end_player_turn.emit(player_number)
+	turn_value = 0
 
 func determine_roll_value(dice):
 	set_all_dice_scored(dice, false)
@@ -51,10 +65,6 @@ func determine_roll_value(dice):
 			handle_hot_dice(dice)
 	
 	return roll_value
-	
-
-func end_turn():
-	turn_value = 0
 
 func _on_dice_rolled(dice):
 	pass
@@ -200,12 +210,14 @@ func _on_dice_dice_finished_rolling(dice):
 	if determine_roll_value(dice) == 0:
 		turn_value = 0
 		display_player_message.emit("You Busted All Over!", 2)
-		end_turn()
+		_on_roll_score_changed.emit(0)
+		toggle_roll_button.emit(false)
 
 
 func _on_roll_button_pressed():
 	# TODO unhold any dice that aren't a part of the score
-	turn_value += determine_roll_value(held_dice)
+	# turn_value += determine_roll_value(held_dice)
+	turn_value += roll_value
 	toggle_roll_button.emit(false)
 	held_dice = []
 
@@ -217,4 +229,3 @@ func _on_end_turn_button_pressed():
 	on_total_score_changed.emit(player_number, score)
 	toggle_roll_button.emit(true)
 	end_turn()
-
