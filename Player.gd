@@ -29,6 +29,7 @@ func _process(delta):
 
 func start_turn():
 	is_players_turn = true
+	_on_roll_score_changed.emit(0)
 	start_player_turn.emit(player_number)
 	
 func end_turn():
@@ -209,7 +210,8 @@ func _on_dice_dice_finished_rolling(dice):
 	if determine_roll_value(dice) == 0:
 		turn_value = 0
 		display_player_message.emit("You Busted All Over!", 2)
-		end_turn()
+		_on_roll_score_changed.emit(0)
+		toggle_roll_button.emit(false)
 
 
 func _on_roll_button_pressed():
