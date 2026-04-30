@@ -38,6 +38,8 @@ func on_end_player_turn(player_num):
 		connect_player_signals(player_num)
 		Players[player_num].start_turn()
 
+# This connects and disconnects all signals to player objects as they start and end
+# their turns.  If you add a signal from or to Player.tscn you must add it to these methods
 func connect_player_signals(player_num):
 	# Connect player signals to other nodes
 	Players[player_num].start_player_turn.connect(UI.on_start_player_turn)
@@ -48,6 +50,7 @@ func connect_player_signals(player_num):
 	Players[player_num].on_total_score_changed.connect(UI._on_player_on_total_score_changed)
 	Players[player_num].toggle_roll_button.connect(UI._on_player_toggle_roll_button)
 	Players[player_num].hot_dice.connect(dice._on_player_hot_dice)
+	Players[player_num].toggle_end_turn_button.connect(UI._on_player_toggle_end_turn_button)
 	
 	# Connect external signals to player
 	dice.on_die_held.connect(Players[player_num].on_die_held)
@@ -66,6 +69,7 @@ func disconnect_player_signals(player_num):
 	Players[player_num].on_total_score_changed.disconnect(UI._on_player_on_total_score_changed)
 	Players[player_num].toggle_roll_button.disconnect(UI._on_player_toggle_roll_button)
 	Players[player_num].hot_dice.disconnect(dice._on_player_hot_dice)
+	Players[player_num].toggle_end_turn_button.disconnect(UI._on_player_toggle_end_turn_button)
 	
 	# Connect external signals to player
 	dice.on_die_held.disconnect(Players[player_num].on_die_held)

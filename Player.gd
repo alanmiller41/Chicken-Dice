@@ -14,6 +14,7 @@ signal _on_roll_score_changed
 signal display_player_message
 signal on_total_score_changed
 signal toggle_roll_button
+signal toggle_end_turn_button
 signal hot_dice
 
 signal start_player_turn
@@ -180,6 +181,8 @@ func on_die_held(die):
 	if held_dice.size() > 0 and held_dice_score > 0:
 		toggle_roll_button.emit(true) 
 	_on_roll_score_changed.emit(turn_value + held_dice_score)
+	if Global.minimum_enabled and score == 0 and turn_value + held_dice_score >= 500:
+		toggle_end_turn_button.emit(true)
 
 
 func on_die_released(die):
@@ -205,6 +208,7 @@ func handle_hot_dice(dice):
 	hot_dice.emit()
 	toggle_roll_button.emit(true)
 	
+	
 func _on_dice_dice_finished_rolling(dice):
 	# If player busted
 	if determine_roll_value(dice) == 0:
@@ -212,6 +216,9 @@ func _on_dice_dice_finished_rolling(dice):
 		display_player_message.emit("You Busted All Over!", 2)
 		_on_roll_score_changed.emit(0)
 		toggle_roll_button.emit(false)
+	if !Global.minimum_enabled or score > 500:
+		toggle_end_turn_button.emit(true)
+		
 
 
 func _on_roll_button_pressed():
