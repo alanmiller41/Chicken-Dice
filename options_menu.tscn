@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bi36qtt5ckcsw"]
+
+[ext_resource type="Script" uid="uid://b6ndlt6tk76ti" path="res://options_menu.gd" id="1_lbr8e"]
+
+[node name="OptionsMenu" type="Node2D" unique_id=1216479461]
+script = ExtResource("1_lbr8e")
+
+[node name="ButtonManager" type="Control" parent="." unique_id=1437079150]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="500MinimumButton" type="CheckButton" parent="ButtonManager" unique_id=1363695327]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 261.0
+offset_right = 657.0
+offset_bottom = 300.0
+button_pressed = true
+text = "500 Point Minimum"
+
+[node name="StealsButton" type="CheckButton" parent="ButtonManager" unique_id=690397913]
+layout_mode = 0
+offset_left = 454.0
+offset_top = 291.0
+offset_right = 656.0
+offset_bottom = 339.0
+text = "Play off Player's roll (not yet implemented)"
+
+[node name="ReturnButton" type="Button" parent="ButtonManager" unique_id=353308982]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 358.0
+offset_right = 631.0
+offset_bottom = 405.0
+text = "Return to Menu"
+
+[connection signal="pressed" from="ButtonManager/500MinimumButton" to="." method="_on_minimum_button_pressed"]
+[connection signal="pressed" from="ButtonManager/StealsButton" to="." method="_on_steals_button_pressed"]
+[connection signal="pressed" from="ButtonManager/ReturnButton" to="." method="_on_return_button_pressed"]
