@@ -173,7 +173,7 @@ func get_one_and_five_values(dice):
 	return ones_fives_score
 
 
-func on_die_held(die):
+func _on_die_held(die):
 	
 	if not die.perma_held:
 		held_dice.append(die)
@@ -185,11 +185,14 @@ func on_die_held(die):
 		toggle_end_turn_button.emit(true)
 
 
-func on_die_released(die):
+func _on_die_released(die):
 	held_dice.erase(die)
+	var held_dice_score = determine_roll_value(held_dice)
 	if held_dice.size() == 0:
 		toggle_roll_button.emit(false)
-	_on_roll_score_changed.emit(turn_value + determine_roll_value(held_dice))
+	_on_roll_score_changed.emit(turn_value + held_dice_score)
+	if Global.minimum_enabled and score == 0 and turn_value + held_dice_score < 500:
+		toggle_end_turn_button.emit(false)
 	
 func set_dice_of_value_scored(dice, val, scored):
 	for die in dice:
@@ -216,6 +219,7 @@ func _on_dice_dice_finished_rolling(dice):
 		display_player_message.emit("You Busted All Over!", 2)
 		_on_roll_score_changed.emit(0)
 		toggle_roll_button.emit(false)
+		toggle_end_turn_button.emit(true)
 	if !Global.minimum_enabled or score > 500:
 		toggle_end_turn_button.emit(true)
 		
