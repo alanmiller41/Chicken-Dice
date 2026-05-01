@@ -1,20 +1,27 @@
 extends Node2D
 
+class_name Player
+
 var score = 0
 var is_players_turn = false
 
 var player_number = 1
 
-var held_dice = []
+var held_dice: Array[Die] = []
 var already_counted_dice_indices = []
 var turn_value = 0
 var roll_value = 0
+
+var roll_count_this_turn = 0
+
+var score_to_steal = 0
 
 signal _on_roll_score_changed
 signal display_player_message
 signal on_total_score_changed
 signal toggle_roll_button
 signal toggle_end_turn_button
+signal toggle_steal_button
 signal hot_dice
 
 signal start_player_turn
@@ -28,15 +35,19 @@ func _ready():
 func _process(delta):
 	pass
 
-func start_turn():
+func start_turn(starting_score: int):
+	if !Global.steals_enabled:
+		score_to_steal = 0
+	else:
+		score_to_steal = starting_score
 	is_players_turn = true
-	_on_roll_score_changed.emit(0)
+	_on_roll_score_changed.emit(starting_score)
 	start_player_turn.emit(player_number)
 	
 func end_turn():
-	#TODO pass turn to next player
 	is_players_turn = false
-	end_player_turn.emit(player_number)
+	end_player_turn.emit(player_number, turn_value)
+	roll_count_this_turn = 0
 	turn_value = 0
 
 func determine_roll_value(dice):
@@ -227,7 +238,8 @@ func _on_dice_dice_finished_rolling(dice):
 
 func _on_roll_button_pressed():
 	# TODO unhold any dice that aren't a part of the score
-	turn_value += roll_value
+	turn_value += roll_value		
+	roll_count_this_turn += 1
 	toggle_roll_button.emit(false)
 	held_dice = []
 
@@ -235,7 +247,17 @@ func _on_roll_button_pressed():
 func _on_end_turn_button_pressed():
 	turn_value += roll_value
 	score += turn_value
-	turn_value = 0
-	on_total_score_changed.emit(player_number, score)
+	on_total_score_changed.emit(player_number, turn_value)
 	toggle_roll_button.emit(true)
+	if Global.steals_enabled:
+		if held_dice.size() < 6:
+			toggle_steal_button.emit(true)
 	end_turn()
+
+func _on_steal_button_pressed():
+	turn_value += score_to_steal
+	roll_count_this_turn += 1
+	toggle_roll_button.emit(false)
+	
+
+

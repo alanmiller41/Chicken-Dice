@@ -1,6 +1,6 @@
 extends Node
 
-var Players = []
+var Players: Array[Player] = []
 var dice
 var UI
 
@@ -13,6 +13,7 @@ func _ready():
 	
 	for i in range(Global.player_count):
 		var player = player_scene.instantiate()
+
 		player.player_number = i+1
 		
 		add_child(player)
@@ -20,23 +21,22 @@ func _ready():
 		
 	# Set first player turn
 	connect_player_signals(0)
-	Players[0].start_turn()
-
+	Players[0].start_turn(0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 
-func _on_end_player_turn(player_num):
+func _on_end_player_turn(player_num: int, score_to_steal: int):
 	disconnect_player_signals(player_num-1)
 	print("player turn ended")
 	if player_num >= Global.player_count:
 		connect_player_signals(0)
-		Players[0].start_turn()
+		Players[0].start_turn(score_to_steal)
 	else:
 		connect_player_signals(player_num)
-		Players[player_num].start_turn()
+		Players[player_num].start_turn(score_to_steal)
 
 # This connects and disconnects all signals to player objects as they start and end
 # their turns.  If you add a signal from or to Player.tscn you must add it to these methods
@@ -51,6 +51,7 @@ func connect_player_signals(player_num):
 	Players[player_num].toggle_roll_button.connect(UI._on_player_toggle_roll_button)
 	Players[player_num].hot_dice.connect(dice._on_player_hot_dice)
 	Players[player_num].toggle_end_turn_button.connect(UI._on_player_toggle_end_turn_button)
+	Players[player_num].toggle_steal_button.connect(UI._on_player_toggle_steal_button)
 	
 	# Connect external signals to player
 	dice.on_die_held.connect(Players[player_num]._on_die_held)
@@ -59,6 +60,7 @@ func connect_player_signals(player_num):
 	
 	UI.on_roll_button_pressed.connect(Players[player_num]._on_roll_button_pressed)
 	UI.on_end_turn_button_pressed.connect(Players[player_num]._on_end_turn_button_pressed)
+	UI.on_steal_button_pressed.connect(Players[player_num]._on_steal_button_pressed)
 	
 func disconnect_player_signals(player_num):
 	Players[player_num].start_player_turn.disconnect(UI._on_start_player_turn)
@@ -70,6 +72,7 @@ func disconnect_player_signals(player_num):
 	Players[player_num].toggle_roll_button.disconnect(UI._on_player_toggle_roll_button)
 	Players[player_num].hot_dice.disconnect(dice._on_player_hot_dice)
 	Players[player_num].toggle_end_turn_button.disconnect(UI._on_player_toggle_end_turn_button)
+	Players[player_num].toggle_steal_button.disconnect(UI._on_player_toggle_steal_button)
 	
 	# Connect external signals to player
 	dice.on_die_held.disconnect(Players[player_num]._on_die_held)
@@ -78,3 +81,4 @@ func disconnect_player_signals(player_num):
 	
 	UI.on_roll_button_pressed.disconnect(Players[player_num]._on_roll_button_pressed)
 	UI.on_end_turn_button_pressed.disconnect(Players[player_num]._on_end_turn_button_pressed)
+	UI.on_steal_button_pressed.disconnect(Players[player_num]._on_steal_button_pressed)

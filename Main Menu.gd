@@ -1,12 +1,11 @@
 extends Node2D
 
-#var player_count = 1
 var player_count_label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player_count_label = $ButtonManager/PlayerCountLabel
-
+	player_count_label.text = "Players: %d" % Global.player_count
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

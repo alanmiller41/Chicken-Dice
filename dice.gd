@@ -1,6 +1,6 @@
 extends Node2D
 
-var dice = []
+var dice: Array[Die] = []
 
 @export var debug_roll_values = []
 @export var debug_rolls = false
@@ -28,13 +28,23 @@ func _ready():
 func _process(delta):
 	pass
 
+func roll_dice():
+	for die in dice:
+		if die.hot_dice:
+			die.end_hot_dice()
+		if die.held:
+			die.permahold()
+		else:
+			die.roll()
+			die.enable_collision()
+		$RollTimer.start()
+	
 func reset_dice(dice):
 	for die in dice:
 		die.rolled = false
 		
 # Pass held die to player for scoring
 func die_held(die):
-	print("Held dice value ", die.value)
 	on_die_held.emit(die)
 	
 # Remove released die from player for scoring
@@ -43,16 +53,10 @@ func die_released(die):
 
 
 func on_roll_button_pressed():
-	for die in dice:
-		if die.hot_dice:
-			die.end_hot_dice()
-		if die.held:
-			die.permahold()
-		else:
-			die.roll()
-		die.enable_collision()
-	$RollTimer.start()
+	roll_dice()
 
+func _on_ui_steal_button_pressed():
+	roll_dice()
 
 func _on_roll_timer_timeout():
 	var rolled_dice = []
@@ -75,6 +79,11 @@ func _on_player_hot_dice():
 
 func _on_end_turn_button_pressed():
 	for die in dice:
-		die.end_hot_dice()
-		die.reset()
+		if die.hot_dice:
+			die.end_hot_dice()
+		if !Global.steals_enabled:
+			die.reset()
 		die.disable_collision()
+
+
+

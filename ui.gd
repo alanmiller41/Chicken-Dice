@@ -1,14 +1,16 @@
 extends Control
 
-var roll_button
-var turn_score_label
-var message_box
-var end_turn_button
-var total_score_label
+var roll_button : Button
+var steal_button : Button
+var turn_score_label : Label
+var message_box : Label
+var end_turn_button : Button
+var total_score_label : Label
 var total_score_labels = []
 
 signal on_roll_button_pressed
 signal on_end_turn_button_pressed
+signal on_steal_button_pressed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,6 +23,19 @@ func _ready():
 	end_turn_button.pressed.connect(_on_end_turn_button_pressed)
 	end_turn_button.scale = Vector2(3,3)
 	end_turn_button.position = Vector2(600, 500)
+	
+	steal_button = $StealButton
+	
+	if Global.steals_enabled:	
+		steal_button.pressed.connect(_on_steal_button_pressed)
+		steal_button.scale = Vector2(3,3)
+		steal_button.position = Vector2(200, 500)
+		steal_button.visible = false
+		steal_button.disabled = true
+	else:
+		steal_button.visible = false
+		steal_button.disabled = true
+	
 	
 	turn_score_label = $TurnScore
 	turn_score_label.scale = Vector2(2,2)
@@ -49,6 +64,11 @@ func _on_roll_button_pressed():
 func _on_end_turn_button_pressed():
 	on_end_turn_button_pressed.emit()
 
+func _on_steal_button_pressed():
+	on_steal_button_pressed.emit()
+	steal_button.visible = false
+	steal_button.disabled = true
+
 func _on_roll_score_changed(new_score):
 	turn_score_label.text = ("Roll Score: %d" % new_score)
 
@@ -69,9 +89,13 @@ func _on_player_toggle_roll_button(toggle: bool):
 func _on_player_toggle_end_turn_button(toggle: bool):
 	end_turn_button.disabled = !toggle
 	
-func _on_start_player_turn(player):
-	total_score_labels[player-1].add_theme_color_override("font_color", Color("fcff00"))
+func _on_player_toggle_steal_button(toggle: bool):
+	steal_button.visible = toggle
+	steal_button.disabled = !toggle
+	
+func _on_start_player_turn(player_num):
+	total_score_labels[player_num-1].add_theme_color_override("font_color", Color("fcff00"))
 	end_turn_button.disabled = true
 	
-func _on_end_player_turn(player):
-	total_score_labels[player-1].add_theme_color_override("font_color", Color("ffff"))
+func _on_end_player_turn(player_num: int, turn_score: int):
+	total_score_labels[player_num-1].add_theme_color_override("font_color", Color("ffff"))

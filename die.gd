@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Die
+
 var normal_dice_sprites = [preload("res://Sprites/Dice/dice_1_dragging.png"),
 preload("res://Sprites/Dice/dice_2_dragging.png"),
 preload("res://Sprites/Dice/dice_3_dragging.png"),
