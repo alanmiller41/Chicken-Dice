@@ -1,6 +1,7 @@
 extends Node
 
 var Players: Array[Player] = []
+var active_player: Player
 var dice
 var UI
 
@@ -34,9 +35,11 @@ func _on_end_player_turn(player_num: int, score_to_steal: int):
 	if player_num >= Global.player_count:
 		connect_player_signals(0)
 		Players[0].start_turn(score_to_steal)
+		active_player = Players[0]
 	else:
 		connect_player_signals(player_num)
 		Players[player_num].start_turn(score_to_steal)
+		active_player = Players[player_num]
 
 # This connects and disconnects all signals to player objects as they start and end
 # their turns.  If you add a signal from or to Player.tscn you must add it to these methods
@@ -50,6 +53,8 @@ func connect_player_signals(player_num):
 	Players[player_num].on_total_score_changed.connect(UI._on_player_on_total_score_changed)
 	Players[player_num].toggle_roll_button.connect(UI._on_player_toggle_roll_button)
 	Players[player_num].hot_dice.connect(dice._on_player_hot_dice)
+	Players[player_num].roll_dice.connect(dice._on_player_rolls_dice)
+	Players[player_num].steal_roll_dice.connect(dice._on_player_steal_rolls_dice)
 	Players[player_num].toggle_end_turn_button.connect(UI._on_player_toggle_end_turn_button)
 	Players[player_num].toggle_steal_button.connect(UI._on_player_toggle_steal_button)
 	
@@ -71,6 +76,8 @@ func disconnect_player_signals(player_num):
 	Players[player_num].on_total_score_changed.disconnect(UI._on_player_on_total_score_changed)
 	Players[player_num].toggle_roll_button.disconnect(UI._on_player_toggle_roll_button)
 	Players[player_num].hot_dice.disconnect(dice._on_player_hot_dice)
+	Players[player_num].roll_dice.disconnect(dice._on_player_rolls_dice)
+	Players[player_num].steal_roll_dice.disconnect(dice._on_player_steal_rolls_dice)
 	Players[player_num].toggle_end_turn_button.disconnect(UI._on_player_toggle_end_turn_button)
 	Players[player_num].toggle_steal_button.disconnect(UI._on_player_toggle_steal_button)
 	

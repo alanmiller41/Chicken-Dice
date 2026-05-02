@@ -8,12 +8,15 @@ var end_turn_button : Button
 var total_score_label : Label
 var total_score_labels = []
 
+var player_manager
+
 signal on_roll_button_pressed
 signal on_end_turn_button_pressed
 signal on_steal_button_pressed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	roll_button = $RollButton
 	roll_button.pressed.connect(_on_roll_button_pressed)
 	roll_button.scale = Vector2(3,3)

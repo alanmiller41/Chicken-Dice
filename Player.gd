@@ -16,6 +16,8 @@ var roll_count_this_turn = 0
 
 var score_to_steal = 0
 
+var dice: Dice
+
 signal _on_roll_score_changed
 signal display_player_message
 signal on_total_score_changed
@@ -23,6 +25,8 @@ signal toggle_roll_button
 signal toggle_end_turn_button
 signal toggle_steal_button
 signal hot_dice
+signal roll_dice
+signal steal_roll_dice
 
 signal start_player_turn
 signal end_player_turn
@@ -239,9 +243,10 @@ func _on_dice_dice_finished_rolling(dice):
 func _on_roll_button_pressed():
 	# TODO unhold any dice that aren't a part of the score
 	turn_value += roll_value		
-	roll_count_this_turn += 1
 	toggle_roll_button.emit(false)
+	roll_dice.emit(roll_count_this_turn)
 	held_dice = []
+	roll_count_this_turn += 1
 
 
 func _on_end_turn_button_pressed():
@@ -256,8 +261,13 @@ func _on_end_turn_button_pressed():
 
 func _on_steal_button_pressed():
 	turn_value += score_to_steal
-	roll_count_this_turn += 1
 	toggle_roll_button.emit(false)
+	
+	if Global.steals_enabled:
+		toggle_steal_button.emit(false)
+		
+	steal_roll_dice.emit()
+	roll_count_this_turn += 1
 	
 
 

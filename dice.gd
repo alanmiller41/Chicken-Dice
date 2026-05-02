@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Dice
+
 var dice: Array[Die] = []
 
 @export var debug_roll_values = []
@@ -39,9 +41,9 @@ func roll_dice():
 			die.enable_collision()
 		$RollTimer.start()
 	
-func reset_dice(dice):
+func reset_dice():
 	for die in dice:
-		die.rolled = false
+		die.reset()
 		
 # Pass held die to player for scoring
 func die_held(die):
@@ -51,12 +53,14 @@ func die_held(die):
 func die_released(die):
 	on_die_released.emit(die)
 
-
-func on_roll_button_pressed():
+func _on_player_rolls_dice(current_turn_roll_count: int):
+	if current_turn_roll_count == 0:
+		reset_dice()	
+	roll_dice()
+	
+func _on_player_steal_rolls_dice():
 	roll_dice()
 
-func _on_ui_steal_button_pressed():
-	roll_dice()
 
 func _on_roll_timer_timeout():
 	var rolled_dice = []

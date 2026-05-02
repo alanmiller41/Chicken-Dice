@@ -93,6 +93,7 @@ func unhold():
 func reset():
 	perma_held = false
 	held = false
+	rolled = false
 	$Sprite2D.texture = normal_dice_sprites[value-1]
 		
 func permahold():
